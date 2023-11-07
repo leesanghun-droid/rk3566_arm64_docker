@@ -1,5 +1,9 @@
 ## RK3566 BASE ARM64 DOCKER INSTALL
 
+0. 의존성 확인하기 ( 매우중요 )
+cd kernel</br>
+check-config.sh .config </br>
+
 참고 ref . https://jundolssite.wordpress.com/tag/armlinux/
 
 1. 리눅스 커널 boot.img 교체</br>
