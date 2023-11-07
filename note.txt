@@ -1,0 +1,107 @@
+구글 네임서버 등록
+sudo chmod 777 /etc/resolv.conf; sudo sed "18 i\nameserver 8.8.8.8\\r\\nnameserver 8.8.4.4" /etc/resolv.conf >resolv_copy.conf; sudo rm /etc/resolv.conf; sudo mv ./resolv_copy.conf /etc/resolv.conf
+
+데비안 기본설치
+참조 : https://www.hostwinds.kr/tutorials/install-docker-debian-based-operating-system
+
+sudo apt update
+
+sudo apt install fuse-overlayfs
+
+sudo apt install \
+apt-transport-https \
+ca-certificates \
+curl \
+gnupg2 \
+software-properties-common
+
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+
+sudo add-apt-repository \
+"deb [arch=arm64] https://download.docker.com/linux/debian \
+$(lsb_release -cs) \
+stable"
+
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+sudo docker run hello-world
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+※특정버전선택
+sudo apt install docker-ce=5:20.10.6~3-0~debian-bullseye docker-ce-cli=5:20.10.6~3-0~debian-bullseye containerd.io
+
+
+※nat 관련 에러
+https://stackoverflow.com/questions/21983554/iptables-v1-4-14-cant-initialize-iptables-table-nat-table-does-not-exist-d
+https://github.com/docker/for-linux/issues/1105
+
+※에러시 : 
+
+iptables/1.8.7 Failed to initialize nft: Protocol not supported
+==>> 
+
+sudo update-alternatives --set iptables /usr/sbin/iptables-legacy;
+sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy;
+
+sudo update-alternatives --set iptables /usr/sbin/iptables-nft;
+sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-nft;
+
+iptables --wait -I FORWARD -o docker0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+
+
+
+Failed to create bridge docker0 via netlink   error="operation not supported"
+==>
+
+
+빌트루트 커너 iptables추가 
+https://tewarid.github.io/2014/09/03/linux-nat-routing-on-raspberry-pi-with-buildroot.html
+
+
+기타참고 
+https://github.com/microsoft/WSL/issues/2291
+
+
+https://www.linuxquestions.org/questions/linux-software-2/can%27t-initialize-iptables-table-%60filter%27-table-does-not-exist-739550/
+
+
+
+br_netfilter
+==> https://github.com/torvalds/linux/blob/master/net/Kconfig
+
+
+sudo iptables --wait -I FORWARD -o docker0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+sudo iptables --wait -I FORWARD -o docker0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+
+
+도커 재시작
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+커널 트리보기
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/bridge/Makefile?h=v6.5.10
+
+
+
+
+br_netfilter.ko
+==>>
+CONFIG_BRIDGE_NETFILTER	        https://www.kernelconfig.io/CONFIG_BRIDGE_NETFILTERq=CONFIG_BRIDGE_NETFILTER&kernelversion=5.10.199&arch=x86
+CONFIG_BRIDGE
+https://www.kernelconfig.io/config_bridge?q=&kernelversion=5.10.199&arch=x86
