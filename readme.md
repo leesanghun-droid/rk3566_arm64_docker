@@ -18,22 +18,20 @@ sudo chmod 777 /etc/resolv.conf; sudo sed "18 i\nameserver 8.8.8.8\\r\\nnameserv
 
 sudo apt update</br>
 
-sudo apt install fuse-overlayfs</br>
-
-sudo apt install \</br>
-apt-transport-https \</br>
-ca-certificates \</br>
-curl \</br>
-gnupg2 \</br>
+sudo apt install \
+fuse-overlayfs \
+apt-transport-https \
+ca-certificates \
+curl \
+gnupg2 \
 software-properties-common</br>
 
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -</br>
-sudo apt-key fingerprint 0EBFCD88</br>
 
-sudo add-apt-repository \</br>
-"deb [arch=arm64] https://download.docker.com/linux/debian \</br>
-$(lsb_release -cs) \</br>
-stable"</br>
+sudo add-apt-repository \
+"deb [arch=arm64] https://download.docker.com/linux/debian \
+$(lsb_release -cs) \
+stable"
 
 sudo apt-get update</br>
 
