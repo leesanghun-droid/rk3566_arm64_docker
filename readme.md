@@ -1,5 +1,7 @@
 ## RK3566 BASE ARM64 DOCKER INSTALL
 
+참고 ref . https://jundolssite.wordpress.com/tag/armlinux/
+
 1. 리눅스 커널 boot.img 교체</br>
 
 ==> kernel/arch/arm64/configs/rockchip_linux_defconfig</br>
