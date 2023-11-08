@@ -44,3 +44,20 @@ sudo apt-get update</br>
 sudo apt-get install docker-ce docker-ce-cli containerd.io</br>
 
 sudo docker run hello-world</br>
+
+
+
+
+
+
+arm에서 amd64 실행하는 참고내용
+
+sudo fdisk -l
+
+sudo mount -t vfat /dev/sdb1 /mnt/usb_memory
+
+sudo apt install qemu-*-static
+
+sudo /usr/bin/qemu-x86_64-static rkImageMaker -unpack ./update_userdebug_2023.10.18.11.29.img output || pause
+
+sudo /usr/bin/qemu-x86_64-static afptool -unpack output/firmware.img output || pause
